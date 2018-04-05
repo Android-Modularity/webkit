@@ -18,6 +18,7 @@ import com.march.common.utils.DrawableUtils;
 import com.march.common.utils.LogUtils;
 import com.march.webkit.IWebView;
 import com.march.webkit.R;
+import com.march.webkit.common.IWebViewSetting;
 import com.march.webkit.js.JsBridge;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebView;
@@ -27,6 +28,8 @@ public class X5WebView extends WebView implements IWebView {
 
     private ProgressBar mProgressBar;
     private Activity mActivity;
+    IWebViewSetting mWebViewSetting;
+
 
     public X5WebView(Context context) {
         this(context, null);
@@ -57,8 +60,9 @@ public class X5WebView extends WebView implements IWebView {
     @Override
     public void initWebView(Activity activity) {
         mActivity = activity;
+        mWebViewSetting = new X5WebViewSetting();
+        mWebViewSetting.setting(this);
         setBackgroundColor(Color.WHITE);
-        X5WebViewSetting.setting(this);
         setWebViewClientAdapter(new X5WebViewClient(activity, this));
         setWebChromeClientAdapter(new X5WebChromeClient(activity, this));
         addJsBridge(new JsBridge(), null);

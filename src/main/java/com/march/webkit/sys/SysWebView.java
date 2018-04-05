@@ -20,6 +20,7 @@ import com.march.common.utils.DrawableUtils;
 import com.march.common.utils.LogUtils;
 import com.march.webkit.IWebView;
 import com.march.webkit.R;
+import com.march.webkit.common.IWebViewSetting;
 import com.march.webkit.js.JsBridge;
 
 
@@ -50,6 +51,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     private Activity mActivity;
     private ProgressBar mProgressBar;
     ValueCallback<Uri[]> mFilePathCallback;
+    IWebViewSetting mWebViewSetting;
 
     private void initProgressBar() {
         if (isInEditMode())
@@ -65,10 +67,11 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
 
     @Override
     public void initWebView(Activity activity) {
-        setBackgroundColor(Color.WHITE);
         mActivity = activity;
+        setBackgroundColor(Color.WHITE);
+        mWebViewSetting = new SysWebViewSetting();
+        mWebViewSetting.setting(this);
         initDownloadListener();
-        SysWebViewSetting.setting(this);
         setWebViewClientAdapter(new SysWebViewClient(activity, this));
         setWebChromeClientAdapter(new SysWebChromeClient(activity, this));
         addJsBridge(new JsBridge(), null);

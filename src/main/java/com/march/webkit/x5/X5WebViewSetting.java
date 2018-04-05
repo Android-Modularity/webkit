@@ -1,9 +1,19 @@
 package com.march.webkit.x5;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Build;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
+import com.march.common.utils.CheckUtils;
+import com.march.webkit.WebKit;
+import com.march.webkit.common.IWebViewSetting;
 import com.tencent.smtt.export.external.interfaces.IX5WebSettings;
 import com.tencent.smtt.sdk.WebSettings;
+
+import java.net.HttpCookie;
+import java.util.List;
 
 /**
  * CreateAt : 2018/4/5
@@ -11,10 +21,15 @@ import com.tencent.smtt.sdk.WebSettings;
  *
  * @author chendong
  */
-public class X5WebViewSetting {
+public class X5WebViewSetting implements IWebViewSetting {
 
     @SuppressLint("SetJavaScriptEnabled")
-    public static void setting(X5WebView x5WebView) {
+    @Override
+    public void setting(Object webview) {
+        if (!(webview instanceof X5WebView)) {
+            return;
+        }
+        X5WebView x5WebView = (X5WebView) webview;
         WebSettings webSetting = x5WebView.getSettings();
 
         webSetting.setJavaScriptCanOpenWindowsAutomatically(true);
@@ -34,6 +49,33 @@ public class X5WebViewSetting {
         webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSetting.setTextZoom(100);
+    }
 
+    @Override
+    public void syncCookie(Context context, String url) {
+        if (CheckUtils.isEmpty(url)) {
+            return;
+        }
+        List<HttpCookie> cookies = WebKit.getService().getCookies(url);
+        if (CheckUtils.isEmpty(cookies)) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.createInstance(context);
+        }
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
+        cookieManager.removeSessionCookie();// 移除
+        cookieManager.removeAllCookie();
+        StringBuilder sbCookie = new StringBuilder();
+        //为url设置cookie
+        for (HttpCookie cookie : cookies) {
+            sbCookie.append(cookie.getName()).append("=").append(cookie.getValue());
+            sbCookie.append(";domain=").append(cookie.getDomain());
+            sbCookie.append(";path=").append(cookie.getPath());
+            String cookieValue = sbCookie.toString();
+            cookieManager.setCookie(url, cookieValue);
+        }
+        CookieSyncManager.getInstance().sync();//同步cookie
     }
 }

@@ -94,5 +94,10 @@ public class SysWebViewClient extends android.webkit.WebViewClient {
         sslErrorHandler.proceed();
     }
 
+    @Override
+    public WebResourceResponse shouldInterceptRequest(WebView webView, String url) {
+        mMyWebView.mWebViewSetting.syncCookie(webView.getContext(), url);
+        return super.shouldInterceptRequest(webView, url);
+    }
 
 }

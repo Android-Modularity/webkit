@@ -3,6 +3,7 @@ package com.march.webkit.x5;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 
 import com.march.common.utils.CheckUtils;
@@ -61,6 +62,13 @@ public class X5WebViewClient extends WebViewClient {
         }
         return false;
     }
+
+    @Override
+    public WebResourceResponse shouldInterceptRequest(WebView webView, String url) {
+        mMyWebView.mWebViewSetting.syncCookie(webView.getContext(), url);
+        return super.shouldInterceptRequest(webView, url);
+    }
+
 
     @Override
     public void onPageFinished(com.tencent.smtt.sdk.WebView webView, String s) {
