@@ -14,6 +14,7 @@ import android.widget.AbsoluteLayout;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
+import com.march.common.utils.CheckUtils;
 import com.march.common.utils.DrawableUtils;
 import com.march.common.utils.LogUtils;
 import com.march.webkit.IWebView;
@@ -31,17 +32,18 @@ public class X5WebView extends WebView implements IWebView {
     IWebViewSetting mWebViewSetting;
 
 
-    public X5WebView(Context context) {
-        this(context, null);
+    public X5WebView(Activity activity) {
+        this(activity, null);
     }
 
-    public X5WebView(Context context, AttributeSet attributeSet) {
-        this(context, attributeSet, 0);
+    public X5WebView(Activity activity, AttributeSet attributeSet) {
+        this(activity, attributeSet, 0);
     }
 
-    public X5WebView(Context context, AttributeSet attributeSet, int i) {
-        super(context, attributeSet, i);
+    public X5WebView(Activity activity, AttributeSet attributeSet, int i) {
+        super(activity, attributeSet, i);
         initProgressBar();
+        initWebView(activity);
     }
 
     private void initProgressBar() {
@@ -56,9 +58,7 @@ public class X5WebView extends WebView implements IWebView {
         addView(mProgressBar);
     }
 
-
-    @Override
-    public void initWebView(Activity activity) {
+    private void initWebView(Activity activity) {
         mActivity = activity;
         mWebViewSetting = new X5WebViewSetting();
         mWebViewSetting.setting(this);
@@ -72,6 +72,9 @@ public class X5WebView extends WebView implements IWebView {
     public void loadPage(String path, int source) {
         if (mActivity == null) {
             LogUtils.e("please invoke initWebView() first");
+            return;
+        }
+        if(CheckUtils.isEmpty(path)){
             return;
         }
         switch (source) {

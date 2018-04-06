@@ -16,6 +16,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.march.common.utils.CheckUtils;
 import com.march.common.utils.DrawableUtils;
 import com.march.common.utils.LogUtils;
 import com.march.webkit.IWebView;
@@ -35,17 +36,18 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
 
     public static final int WEB_REQ_CODE = 0x123;
 
-    public SysWebView(Context context) {
-        this(context, null);
+    public SysWebView(Activity activity) {
+        this(activity, null);
     }
 
-    public SysWebView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+    public SysWebView(Activity activity, AttributeSet attrs) {
+        this(activity, attrs, 0);
     }
 
-    public SysWebView(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+    public SysWebView(Activity activity, AttributeSet attrs, int defStyleAttr) {
+        super(activity, attrs, defStyleAttr);
         initProgressBar();
+        initWebView(activity);
     }
 
     private Activity mActivity;
@@ -65,8 +67,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     }
 
 
-    @Override
-    public void initWebView(Activity activity) {
+    private void initWebView(Activity activity) {
         mActivity = activity;
         setBackgroundColor(Color.WHITE);
         mWebViewSetting = new SysWebViewSetting();
@@ -100,6 +101,9 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     public void loadPage(String path, int source) {
         if (mActivity == null) {
             LogUtils.e("please invoke initWebView() first");
+            return;
+        }
+        if(CheckUtils.isEmpty(path)){
             return;
         }
         switch (source) {

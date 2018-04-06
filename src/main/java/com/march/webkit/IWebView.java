@@ -26,8 +26,6 @@ public interface IWebView {
 
     Context getContext();
 
-    void initWebView(Activity activity);
-
     void loadPage(String path, int source);
 
     void loadPage(String path);
