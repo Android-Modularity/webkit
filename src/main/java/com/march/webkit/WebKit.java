@@ -1,9 +1,8 @@
 package com.march.webkit;
 
-import com.tencent.smtt.sdk.QbSdk;
+import android.app.Application;
 
-import java.net.HttpCookie;
-import java.util.List;
+import com.tencent.smtt.sdk.QbSdk;
 
 /**
  * CreateAt : 2018/4/5
@@ -13,31 +12,26 @@ import java.util.List;
  */
 public class WebKit {
 
-    public interface Service {
+    private static WebKitInjector sWebKitInjector = WebKitInjector.EMPTY;
 
-        String getUserAgent();
-
-        List<HttpCookie> getCookies(String url);
+    public static WebKitInjector getInjector() {
+        return sWebKitInjector;
     }
 
-    private static Service sService = new Service() {
-        @Override
-        public String getUserAgent() {
-            return null;
+    public static void init(Application application, WebKitInjector injector) {
+        if(injector!=null) {
+            sWebKitInjector = injector;
         }
+        QbSdk.initX5Environment(application, new QbSdk.PreInitCallback() {
+            @Override
+            public void onCoreInitFinished() {
 
-        @Override
-        public List<HttpCookie> getCookies(String url) {
-            return null;
-        }
-    };
+            }
 
-    public static Service getService() {
-        return sService;
+            @Override
+            public void onViewInitFinished(boolean b) {
+
+            }
+        });
     }
-
-    public static void setService(Service service) {
-        sService = service;
-    }
-
 }

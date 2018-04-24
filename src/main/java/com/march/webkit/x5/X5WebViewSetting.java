@@ -49,6 +49,7 @@ public class X5WebViewSetting implements IWebViewSetting {
         webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSetting.setTextZoom(100);
+        webSetting.setUserAgent(WebKit.getInjector().getUserAgent());
     }
 
     @Override
@@ -56,7 +57,7 @@ public class X5WebViewSetting implements IWebViewSetting {
         if (CheckUtils.isEmpty(url)) {
             return;
         }
-        List<HttpCookie> cookies = WebKit.getService().getCookies(url);
+        List<HttpCookie> cookies = WebKit.getInjector().getCookies(url);
         if (CheckUtils.isEmpty(cookies)) {
             return;
         }

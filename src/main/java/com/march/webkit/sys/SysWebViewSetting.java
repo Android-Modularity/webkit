@@ -66,7 +66,7 @@ public class SysWebViewSetting implements IWebViewSetting {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        webSettings.setUserAgentString(webSettings.getUserAgentString() + WebKit.getService().getUserAgent());
+        webSettings.setUserAgentString(webSettings.getUserAgentString() + WebKit.getInjector().getUserAgent());
     }
 
     @Override
@@ -74,7 +74,7 @@ public class SysWebViewSetting implements IWebViewSetting {
         if (CheckUtils.isEmpty(url)) {
             return;
         }
-        List<HttpCookie> cookies = WebKit.getService().getCookies(url);
+        List<HttpCookie> cookies = WebKit.getInjector().getCookies(url);
         if (CheckUtils.isEmpty(cookies)) {
             return;
         }
