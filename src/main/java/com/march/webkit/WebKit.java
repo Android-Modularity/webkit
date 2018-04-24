@@ -20,7 +20,17 @@ public class WebKit {
         List<HttpCookie> getCookies(String url);
     }
 
-    private static Service sService;
+    private static Service sService = new Service() {
+        @Override
+        public String getUserAgent() {
+            return null;
+        }
+
+        @Override
+        public List<HttpCookie> getCookies(String url) {
+            return null;
+        }
+    };
 
     public static Service getService() {
         return sService;

@@ -83,17 +83,16 @@ public class SysWebViewSetting implements IWebViewSetting {
         }
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
-        cookieManager.removeSessionCookie();// 移除
+        cookieManager.removeSessionCookie(); // 移除
         cookieManager.removeAllCookie();
         StringBuilder sbCookie = new StringBuilder();
-        //为url设置cookie
+        // 为url设置cookie
         for (HttpCookie cookie : cookies) {
             sbCookie.append(cookie.getName()).append("=").append(cookie.getValue());
             sbCookie.append(";domain=").append(cookie.getDomain());
             sbCookie.append(";path=").append(cookie.getPath());
-            String cookieValue = sbCookie.toString();
-            cookieManager.setCookie(url, cookieValue);
         }
+        cookieManager.setCookie(url,  sbCookie.toString());
         CookieSyncManager.getInstance().sync();//同步cookie
     }
 }
