@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import com.march.common.utils.LogUtils;
+import com.march.common.utils.LgUtils;
 import com.march.common.utils.ToastUtils;
 import com.march.webkit.IWebView;
 
@@ -41,7 +41,7 @@ public class JsBridge implements IJsBridge {
     @JavascriptInterface
     @Override
     public void log(String msg) {
-        LogUtils.e(TAG, msg);
+        LgUtils.e(TAG, msg);
     }
 
     @JavascriptInterface

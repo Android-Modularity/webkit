@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 
 import com.march.common.utils.CheckUtils;
 import com.march.common.utils.DrawableUtils;
-import com.march.common.utils.LogUtils;
+import com.march.common.utils.LgUtils;
 import com.march.webkit.IWebView;
 import com.march.webkit.R;
 import com.march.webkit.common.IWebViewSetting;
@@ -100,7 +100,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     @Override
     public void loadPage(String path, int source) {
         if (mActivity == null) {
-            LogUtils.e("please invoke initWebView() first");
+            LgUtils.e("please invoke initWebView() first");
             return;
         }
         if(CheckUtils.isEmpty(path)){
@@ -167,7 +167,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         if (webViewClient instanceof WebViewClient) {
             setWebViewClient((WebViewClient) webViewClient);
         } else {
-            LogUtils.e("setWebViewClientAdapter param error, use <WebViewClient>");
+            LgUtils.e("setWebViewClientAdapter param error, use <WebViewClient>");
         }
     }
 
@@ -176,7 +176,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         if (webChromeClient instanceof WebChromeClient) {
             setWebChromeClient((WebChromeClient) webChromeClient);
         } else {
-            LogUtils.e("setWebChromeClientAdapter param error, use <WebChromeClient>");
+            LgUtils.e("setWebChromeClientAdapter param error, use <WebChromeClient>");
         }
     }
 
