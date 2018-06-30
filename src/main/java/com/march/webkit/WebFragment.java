@@ -1,5 +1,6 @@
 package com.march.webkit;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +27,17 @@ public class WebFragment extends Fragment {
         return webFragment;
     }
 
+
+    public WebFragment() {
+
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mIWebView = WebKit.createWebView(getActivity());
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +46,6 @@ public class WebFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mIWebView = WebKit.createWebView(getActivity());
         if (getArguments() != null) {
             mUrl = getArguments().getString(WebKit.KEY_URL);
         }
@@ -51,5 +62,9 @@ public class WebFragment extends Fragment {
 
     public boolean onBackPressed() {
         return mIWebView.onBackPressed();
+    }
+
+    public IWebView getIWebView() {
+        return mIWebView;
     }
 }

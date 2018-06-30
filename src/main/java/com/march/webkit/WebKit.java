@@ -50,16 +50,16 @@ public class WebKit {
         }
         sWebKitConfig = new WebKitConfig();
         sWebKitConfig.webkitType = type;
-        QbSdk.initX5Environment(application, new QbSdk.PreInitCallback() {
-            @Override
-            public void onCoreInitFinished() {
-
-            }
-
-            @Override
-            public void onViewInitFinished(boolean b) {
-
-            }
-        });
+//        QbSdk.initX5Environment(application, new QbSdk.PreInitCallback() {
+//            @Override
+//            public void onCoreInitFinished() {
+//
+//            }
+//
+//            @Override
+//            public void onViewInitFinished(boolean b) {
+//
+//            }
+//        });
     }
 }
