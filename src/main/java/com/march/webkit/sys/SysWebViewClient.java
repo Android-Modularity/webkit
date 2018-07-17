@@ -41,14 +41,11 @@ public class SysWebViewClient extends android.webkit.WebViewClient {
 
     private boolean handleBySystemIntent(String link) {
         try {
-            String url = link.replace("//", "");
-            Uri uri = Uri.parse(url);
+            Uri uri = Uri.parse(    link);
             String scheme = uri.getScheme();
             if (CheckUtils.isEmpty(scheme))
                 return false;
-            if (scheme.startsWith("tel")
-                    || scheme.startsWith("sms")
-                    || scheme.startsWith("mailto")) {
+            if (!scheme.startsWith("http")) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(uri);
                 mActivity.startActivity(intent);
