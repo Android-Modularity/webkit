@@ -3,11 +3,10 @@ package com.march.webkit.x5;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.view.View;
 
 import com.march.common.utils.CheckUtils;
-import com.march.common.utils.LogUtils;
+import com.march.common.utils.LgUtils;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
@@ -79,26 +78,26 @@ public class X5WebViewClient extends WebViewClient {
     @Override
     public void onReceivedError(WebView webView, int i, String s, String s1) {
         super.onReceivedError(webView, i, s, s1);
-        LogUtils.all("onReceivedError", i, s, s1);
+        LgUtils.all("onReceivedError", i, s, s1);
     }
 
     @Override
     public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
         super.onReceivedError(webView, webResourceRequest, webResourceError);
-        LogUtils.all("onReceivedError", webResourceError.getDescription());
+        LgUtils.all("onReceivedError", webResourceError.getDescription());
     }
 
     @Override
     public void onReceivedHttpError(WebView webView, WebResourceRequest webResourceRequest, WebResourceResponse webResourceResponse) {
         super.onReceivedHttpError(webView, webResourceRequest, webResourceResponse);
-        LogUtils.all("onReceivedHttpError");
+        LgUtils.all("onReceivedHttpError");
 
     }
 
     @Override
     public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
         super.onReceivedSslError(webView, sslErrorHandler, sslError);
-        LogUtils.all("onReceivedSslError");
+        LgUtils.all("onReceivedSslError");
         sslErrorHandler.proceed();
     }
 }
