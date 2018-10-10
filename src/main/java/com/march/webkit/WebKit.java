@@ -17,7 +17,6 @@ import com.tencent.smtt.sdk.QbSdk;
  */
 public class WebKit {
 
-
     public static final String KEY_URL = "WEBKIT_KEY_URL";
 
     public static final int CORE_SYS = 0;
