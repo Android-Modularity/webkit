@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.march.webkit.webview.IWebView;
+
 
 /**
  * CreateAt : 2018/4/24
@@ -19,7 +21,7 @@ import android.view.ViewGroup;
 public class WebFragment extends Fragment {
 
     private IWebView mIWebView;
-    private String mUrl;
+    private String   mUrl;
 
     public static WebFragment newInst(Bundle args) {
         WebFragment webFragment = new WebFragment();

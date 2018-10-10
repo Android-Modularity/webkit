@@ -1,4 +1,4 @@
-package com.march.webkit.x5;
+package com.march.webkit.webview.x5;
 
 import android.app.Activity;
 import android.view.View;

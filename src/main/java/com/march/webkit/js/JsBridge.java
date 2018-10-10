@@ -1,13 +1,11 @@
 package com.march.webkit.js;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.util.Log;
 import android.webkit.JavascriptInterface;
 
-import com.march.common.utils.LgUtils;
-import com.march.common.utils.ToastUtils;
-import com.march.webkit.IWebView;
+import com.march.common.exts.LogX;
+import com.march.common.exts.ToastX;
+import com.march.webkit.webview.IWebView;
 
 
 /**
@@ -35,13 +33,13 @@ public class JsBridge implements IJsBridge {
     @JavascriptInterface
     @Override
     public void toast(String msg) {
-        ToastUtils.show(msg);
+        ToastX.show(msg);
     }
 
     @JavascriptInterface
     @Override
     public void log(String msg) {
-        LgUtils.e(TAG, msg);
+        LogX.e(TAG, msg);
     }
 
     @JavascriptInterface

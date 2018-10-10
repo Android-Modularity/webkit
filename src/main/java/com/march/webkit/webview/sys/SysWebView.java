@@ -1,28 +1,24 @@
-package com.march.webkit.sys;
+package com.march.webkit.webview.sys;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
-import com.march.common.utils.CheckUtils;
-import com.march.common.utils.DrawableUtils;
-import com.march.common.utils.LgUtils;
-import com.march.webkit.IWebView;
+import com.march.common.exts.EmptyX;
+import com.march.common.exts.LogX;
+import com.march.common.exts.ResourceX;
+import com.march.webkit.webview.IWebView;
 import com.march.webkit.R;
 import com.march.webkit.common.IWebViewSetting;
 import com.march.webkit.js.JsBridge;
@@ -63,7 +59,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
             return;
         mProgressBar = new ProgressBar(getContext(), null, android.R.attr.progressBarStyleHorizontal);
         mProgressBar.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, PROGRESS_HEIGHT));
-        mProgressBar.setProgressDrawable(DrawableUtils.getDrawable(getContext(), R.drawable.webview_progress_drawable));
+        mProgressBar.setProgressDrawable(ResourceX.getDrawable(getContext(), R.drawable.webview_progress_drawable));
         mProgressBar.setIndeterminate(false);
         mProgressBar.setProgress(0);
         addView(mProgressBar);
@@ -104,10 +100,10 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     @Override
     public void loadPage(String path, int source) {
         if (mActivity == null) {
-            LgUtils.e("please invoke initWebView() first");
+            LogX.e("please invoke initWebView() first");
             return;
         }
-        if(CheckUtils.isEmpty(path)){
+        if(EmptyX.isEmpty(path)){
             return;
         }
         switch (source) {
@@ -170,7 +166,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         if (webViewClient instanceof WebViewClient) {
             setWebViewClient((WebViewClient) webViewClient);
         } else {
-            LgUtils.e("setWebViewClientAdapter param error, use <WebViewClient>");
+            LogX.e("setWebViewClientAdapter param error, use <WebViewClient>");
         }
     }
 
@@ -179,7 +175,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         if (webChromeClient instanceof WebChromeClient) {
             setWebChromeClient((WebChromeClient) webChromeClient);
         } else {
-            LgUtils.e("setWebChromeClientAdapter param error, use <WebChromeClient>");
+            LogX.e("setWebChromeClientAdapter param error, use <WebChromeClient>");
         }
     }
 

@@ -3,8 +3,10 @@ package com.march.webkit;
 import android.app.Activity;
 import android.app.Application;
 
-import com.march.webkit.sys.SysWebView;
-import com.march.webkit.x5.X5WebView;
+import com.march.webkit.adapter.MetaAdapter;
+import com.march.webkit.webview.IWebView;
+import com.march.webkit.webview.sys.SysWebView;
+import com.march.webkit.webview.x5.X5WebView;
 import com.tencent.smtt.sdk.QbSdk;
 
 /**
@@ -15,28 +17,38 @@ import com.tencent.smtt.sdk.QbSdk;
  */
 public class WebKit {
 
-    static class WebKitConfig {
-        int webkitType = CORE_SYS;
-    }
 
-    public static final String KEY_URL = "key-url";
+    public static final String KEY_URL = "WEBKIT_KEY_URL";
+
     public static final int CORE_SYS = 0;
     public static final int CORE_X5 = 1;
 
-    private static WebKitConfig sWebKitConfig;
-    private static WebKitInjector sWebKitInjector = WebKitInjector.EMPTY;
+    private static int         sCoreType;
+    private static MetaAdapter sMetaAdapter;
 
-    public static WebKitInjector getInjector() {
-        return sWebKitInjector;
-    }
+    public static void init(Application app, int type, MetaAdapter adapter) {
 
-    public static WebKitConfig getWebKitConfig() {
-        return sWebKitConfig;
+        sCoreType = type;
+        sMetaAdapter = adapter == null ? MetaAdapter.EMPTY : adapter;
+
+        if (sCoreType == CORE_X5) {
+            QbSdk.initX5Environment(app, new QbSdk.PreInitCallback() {
+                @Override
+                public void onCoreInitFinished() {
+
+                }
+
+                @Override
+                public void onViewInitFinished(boolean b) {
+
+                }
+            });
+        }
     }
 
     public static IWebView createWebView(Activity activity) {
         IWebView iWebView;
-        if (WebKit.getWebKitConfig().webkitType == WebKit.CORE_SYS) {
+        if (WebKit.sCoreType == WebKit.CORE_SYS) {
             iWebView = new SysWebView(activity);
         } else {
             iWebView = new X5WebView(activity);
@@ -44,22 +56,12 @@ public class WebKit {
         return iWebView;
     }
 
-    public static void init(Application application, int type, WebKitInjector injector) {
-        if (injector != null) {
-            sWebKitInjector = injector;
-        }
-        sWebKitConfig = new WebKitConfig();
-        sWebKitConfig.webkitType = type;
-//        QbSdk.initX5Environment(application, new QbSdk.PreInitCallback() {
-//            @Override
-//            public void onCoreInitFinished() {
-//
-//            }
-//
-//            @Override
-//            public void onViewInitFinished(boolean b) {
-//
-//            }
-//        });
+
+    public static int getCoreType() {
+        return sCoreType;
+    }
+
+    public static MetaAdapter getMetaAdapter() {
+        return sMetaAdapter;
     }
 }

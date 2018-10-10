@@ -1,4 +1,4 @@
-package com.march.webkit.x5;
+package com.march.webkit.webview.x5;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -6,10 +6,9 @@ import android.os.Build;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-import com.march.common.utils.CheckUtils;
+import com.march.common.exts.EmptyX;
 import com.march.webkit.WebKit;
 import com.march.webkit.common.IWebViewSetting;
-import com.tencent.smtt.export.external.interfaces.IX5WebSettings;
 import com.tencent.smtt.sdk.WebSettings;
 
 import java.net.HttpCookie;
@@ -49,16 +48,16 @@ public class X5WebViewSetting implements IWebViewSetting {
         webSetting.setRenderPriority(WebSettings.RenderPriority.HIGH);
         webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
         webSetting.setTextZoom(100);
-        webSetting.setUserAgent(WebKit.getInjector().getUserAgent());
+        webSetting.setUserAgent(WebKit.getMetaAdapter().getUserAgent());
     }
 
     @Override
     public void syncCookie(Context context, String url) {
-        if (CheckUtils.isEmpty(url)) {
+        if (EmptyX.isEmpty(url)) {
             return;
         }
-        List<HttpCookie> cookies = WebKit.getInjector().getCookies(url);
-        if (CheckUtils.isEmpty(cookies)) {
+        List<HttpCookie> cookies = WebKit.getMetaAdapter().getCookies(url);
+        if (EmptyX.isEmpty(cookies)) {
             return;
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {

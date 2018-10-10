@@ -1,23 +1,19 @@
-package com.march.webkit.x5;
+package com.march.webkit.webview.x5;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.ViewGroup;
 import android.widget.AbsoluteLayout;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.march.common.utils.CheckUtils;
-import com.march.common.utils.DrawableUtils;
-import com.march.common.utils.LgUtils;
-import com.march.webkit.IWebView;
+import com.march.common.exts.EmptyX;
+import com.march.common.exts.LogX;
+import com.march.webkit.webview.IWebView;
 import com.march.webkit.R;
 import com.march.webkit.common.IWebViewSetting;
 import com.march.webkit.js.JsBridge;
@@ -71,10 +67,10 @@ public class X5WebView extends WebView implements IWebView {
     @Override
     public void loadPage(String path, int source) {
         if (mActivity == null) {
-            LgUtils.e("please invoke initWebView() first");
+            LogX.e("please invoke initWebView() first");
             return;
         }
-        if(CheckUtils.isEmpty(path)){
+        if(EmptyX.isEmpty(path)){
             return;
         }
         switch (source) {
@@ -128,7 +124,7 @@ public class X5WebView extends WebView implements IWebView {
         if (webViewClient instanceof WebViewClient) {
             setWebViewClient((WebViewClient) webViewClient);
         } else {
-            LgUtils.e("setWebViewClientAdapter param error, use <WebViewClient>");
+            LogX.e("setWebViewClientAdapter param error, use <WebViewClient>");
         }
     }
 
@@ -137,7 +133,7 @@ public class X5WebView extends WebView implements IWebView {
         if (webChromeClient instanceof WebChromeClient) {
             setWebChromeClient((WebChromeClient) webChromeClient);
         } else {
-            LgUtils.e("setWebChromeClientAdapter param error, use <WebChromeClient>");
+            LogX.e("setWebChromeClientAdapter param error, use <WebChromeClient>");
         }
     }
 

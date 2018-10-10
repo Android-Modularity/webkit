@@ -1,4 +1,4 @@
-package com.march.webkit.sys;
+package com.march.webkit.webview.sys;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,8 +11,8 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
-import com.march.common.utils.CheckUtils;
-import com.march.common.utils.LgUtils;
+import com.march.common.exts.EmptyX;
+import com.march.common.exts.LogX;
 
 
 /**
@@ -43,7 +43,7 @@ public class SysWebViewClient extends android.webkit.WebViewClient {
         try {
             Uri uri = Uri.parse(    link);
             String scheme = uri.getScheme();
-            if (CheckUtils.isEmpty(scheme))
+            if (EmptyX.isEmpty(scheme))
                 return false;
             if (!scheme.startsWith("http")) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -67,27 +67,27 @@ public class SysWebViewClient extends android.webkit.WebViewClient {
     @Override
     public void onReceivedError(WebView webView, int i, String s, String s1) {
         super.onReceivedError(webView, i, s, s1);
-        LgUtils.all("onReceivedError", i, s, s1);
+        LogX.all("onReceivedError", i, s, s1);
     }
 
 
     @Override
     public void onReceivedError(WebView webView, WebResourceRequest webResourceRequest, WebResourceError webResourceError) {
         super.onReceivedError(webView, webResourceRequest, webResourceError);
-        LgUtils.all("onReceivedError", webResourceError.toString());
+        LogX.all("onReceivedError", webResourceError.toString());
     }
 
     @Override
     public void onReceivedHttpError(WebView webView, WebResourceRequest webResourceRequest, WebResourceResponse webResourceResponse) {
         super.onReceivedHttpError(webView, webResourceRequest, webResourceResponse);
-        LgUtils.all("onReceivedHttpError");
+        LogX.all("onReceivedHttpError");
 
     }
 
     @Override
     public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
         super.onReceivedSslError(webView, sslErrorHandler, sslError);
-        LgUtils.all("onReceivedSslError");
+        LogX.all("onReceivedSslError");
         sslErrorHandler.proceed();
     }
 

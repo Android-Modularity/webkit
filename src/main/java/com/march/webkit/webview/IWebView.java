@@ -1,11 +1,10 @@
-package com.march.webkit;
+package com.march.webkit.webview;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.ProgressBar;
 
-import com.march.common.utils.DimensUtils;
 import com.march.webkit.js.JsBridge;
 
 /**

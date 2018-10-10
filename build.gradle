@@ -1,16 +1,6 @@
-apply plugin: 'com.android.library'
-
-// project/build.gradle
-// apply from: 'https://coding.net/u/devlab/p/Resource/git/raw/master/android/project.gradle'
-def libs = rootProject.ext.libs
-def version = rootProject.ext.version
-
-android {
-    compileSdkVersion version.compileSdkVersion
-}
 
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    implementation libs.appcompat_v7
-    implementation libs.common
+    implementation files("libs/tbs_sdk_v3.6.0.1183.jar")
+    compileOnly libs.appcompat_v7
+    compileOnly project(path: ':common')
 }
