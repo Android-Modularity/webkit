@@ -14,11 +14,11 @@ import android.webkit.WebView;
 public class X5WebChromeClient extends WebChromeClient {
 
     private X5WebView mMyWebView;
-    private Activity mActivity;
+    private Activity getActivity()ivity;
 
     public X5WebChromeClient(Activity activity, X5WebView myWebView) {
         mMyWebView = myWebView;
-        mActivity = activity;
+        getActivity()ivity = activity;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class X5WebChromeClient extends WebChromeClient {
 //    public boolean onShowFileChooser(WebView webView,
 //            ValueCallback<Uri[]> filePathCallback,
 //            FileChooserParams fileChooserParams) {
-//        if (mActivity == null)
+//        if (getActivity()ivity == null)
 //            return false;
 //        /*
 //        How to use:
@@ -50,7 +50,7 @@ public class X5WebChromeClient extends WebChromeClient {
 //            intent.addCategory(Intent.CATEGORY_OPENABLE);
 //            intent.setType("*/*");
 //        }
-//        mActivity.startActivityForResult(intent, SysWebView.WEB_REQ_CODE);
+//        getActivity()ivity.startActivityForResult(intent, SysWebView.WEB_REQ_CODE);
 //        mMyWebView.mFilePathCallback = filePathCallback;
 //        return true;
 //    }

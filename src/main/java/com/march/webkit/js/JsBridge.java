@@ -19,11 +19,11 @@ public class JsBridge implements IJsBridge {
     public static final String TAG = JsBridge.class.getSimpleName();
 
     private IWebView mWebView;
-    private Activity mActivity;
+    private Activity getActivity()ivity;
 
     public void init(IWebView webView, Activity activity) {
         this.mWebView = webView;
-        this.mActivity = activity;
+        this.getActivity()ivity = activity;
     }
 
     ///////////////////////////////////////////////////////////////////////////
@@ -45,7 +45,7 @@ public class JsBridge implements IJsBridge {
     @JavascriptInterface
     @Override
     public void finish() {
-        mActivity.finish();
+        getActivity()ivity.finish();
     }
 
     @JavascriptInterface

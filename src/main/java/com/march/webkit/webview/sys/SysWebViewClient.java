@@ -24,11 +24,11 @@ import com.march.common.exts.LogX;
 public class SysWebViewClient extends android.webkit.WebViewClient {
 
     private SysWebView mMyWebView;
-    private Activity mActivity;
+    private Activity getActivity()ivity;
 
     public SysWebViewClient(Activity activity, SysWebView myWebView) {
         mMyWebView = myWebView;
-        mActivity = activity;
+        getActivity()ivity = activity;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class SysWebViewClient extends android.webkit.WebViewClient {
             if (!scheme.startsWith("http")) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(uri);
-                mActivity.startActivity(intent);
+                getActivity()ivity.startActivity(intent);
                 return true;
             }
         } catch (Exception e) {
