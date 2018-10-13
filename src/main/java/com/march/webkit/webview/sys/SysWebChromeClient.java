@@ -25,11 +25,11 @@ import android.widget.LinearLayout;
 public class SysWebChromeClient extends WebChromeClient {
 
     private SysWebView mMyWebView;
-    private Activity getActivity()ivity;
+    private Activity mActivity;
 
     public SysWebChromeClient(Activity activity, SysWebView myWebView) {
         mMyWebView = myWebView;
-        getActivity()ivity = activity;
+        mActivity = activity;
     }
 
     @Override
@@ -42,7 +42,7 @@ public class SysWebChromeClient extends WebChromeClient {
     public boolean onShowFileChooser(WebView webView,
             ValueCallback<Uri[]> filePathCallback,
             FileChooserParams fileChooserParams) {
-        if (getActivity()ivity == null)
+        if (mActivity == null)
             return false;
         /*
         How to use:
@@ -61,7 +61,7 @@ public class SysWebChromeClient extends WebChromeClient {
             intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("*/*");
         }
-        getActivity()ivity.startActivityForResult(intent, SysWebView.WEB_REQ_CODE);
+        mActivity.startActivityForResult(intent, SysWebView.WEB_REQ_CODE);
         mMyWebView.mFilePathCallback = filePathCallback;
         return true;
     }

@@ -24,7 +24,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 public class X5WebView extends WebView implements IWebView {
 
     private ProgressBar mProgressBar;
-    private Activity getActivity()ivity;
+    private Activity mActivity;
     IWebViewSetting mWebViewSetting;
 
 
@@ -55,7 +55,7 @@ public class X5WebView extends WebView implements IWebView {
     }
 
     private void initWebView(Activity activity) {
-        getActivity()ivity = activity;
+        mActivity = activity;
         mWebViewSetting = new X5WebViewSetting();
         mWebViewSetting.setting(this);
         setBackgroundColor(Color.WHITE);
@@ -66,7 +66,7 @@ public class X5WebView extends WebView implements IWebView {
 
     @Override
     public void loadPage(String path, int source) {
-        if (getActivity()ivity == null) {
+        if (mActivity == null) {
             LogX.e("please invoke initWebView() first");
             return;
         }
@@ -112,7 +112,7 @@ public class X5WebView extends WebView implements IWebView {
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     public void addJsBridge(JsBridge jsBridge, String name) {
         getSettings().setJavaScriptEnabled(true);
-        jsBridge.init(this, getActivity()ivity);
+        jsBridge.init(this, mActivity);
         if (TextUtils.isEmpty(name)) {
             name = JS_INVOKE_NAME;
         }

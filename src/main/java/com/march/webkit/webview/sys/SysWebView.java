@@ -49,7 +49,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         initWebView(activity);
     }
 
-    private Activity getActivity()ivity;
+    private Activity mActivity;
     private ProgressBar mProgressBar;
     ValueCallback<Uri[]> mFilePathCallback;
     IWebViewSetting mWebViewSetting;
@@ -68,7 +68,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
 
     private void initWebView(Activity activity) {
         
-        getActivity()ivity = activity;
+        mActivity = activity;
         setBackgroundColor(Color.WHITE);
         mWebViewSetting = new SysWebViewSetting();
         mWebViewSetting.setting(this);
@@ -99,7 +99,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
 
     @Override
     public void loadPage(String path, int source) {
-        if (getActivity()ivity == null) {
+        if (mActivity == null) {
             LogX.e("please invoke initWebView() first");
             return;
         }
@@ -154,7 +154,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     public void addJsBridge(JsBridge jsBridge, String name) {
         getSettings().setJavaScriptEnabled(true);
-        jsBridge.init(this, getActivity()ivity);
+        jsBridge.init(this, mActivity);
         if (TextUtils.isEmpty(name)) {
             name = JS_INVOKE_NAME;
         }

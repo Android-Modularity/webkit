@@ -25,11 +25,11 @@ import com.tencent.smtt.sdk.WebViewClient;
 public class X5WebViewClient extends WebViewClient {
 
     private X5WebView mMyWebView;
-    private Activity getActivity()ivity;
+    private Activity mActivity;
 
     public X5WebViewClient(Activity activity, X5WebView myWebView) {
         mMyWebView = myWebView;
-        getActivity()ivity = activity;
+        mActivity = activity;
     }
 
     @Override
@@ -52,7 +52,7 @@ public class X5WebViewClient extends WebViewClient {
                     || scheme.startsWith("mailto")) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setData(uri);
-                getActivity()ivity.startActivity(intent);
+                mActivity.startActivity(intent);
                 return true;
             }
         } catch (Exception e) {
