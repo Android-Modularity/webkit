@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.march.common.exts.LogX;
 import com.march.common.funcs.Consumer;
 import com.march.webkit.webview.IWebView;
 
@@ -55,6 +56,7 @@ public class WebFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (getArguments() != null) {
             mUrl = getArguments().getString(WebKit.KEY_URL);
+            LogX.e("URL ======> " + mUrl);
         }
         return (View) mIWebView;
     }
@@ -77,5 +79,11 @@ public class WebFragment extends Fragment {
 
     public void setWebViewInitConsumer(Consumer<IWebView> webViewInitConsumer) {
         mWebViewInitConsumer = webViewInitConsumer;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mIWebView.onDestroy();
     }
 }
