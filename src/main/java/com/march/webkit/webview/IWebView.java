@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.ProgressBar;
 
+import com.march.common.able.Destroyable;
 import com.march.webkit.adapter.WebViewAdapter;
 import com.march.webkit.js.JsBridge;
 
@@ -14,7 +15,7 @@ import com.march.webkit.js.JsBridge;
  *
  * @author chendong
  */
-public interface IWebView {
+public interface IWebView extends Destroyable{
 
     String JS_INVOKE_NAME = "native";
 

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 
 import com.march.common.exts.EmptyX;
+import com.march.webkit.WebKit;
 
 /**
  * CreateAt : 2018/10/18
@@ -21,7 +22,8 @@ public class WebKitUtils {
             if (EmptyX.isEmpty(scheme)) {
                 return false;
             }
-            if (scheme.startsWith("tel")
+            if (WebKit.getMetaAdapter().getAllowOpenSchemes().contains(scheme)
+                    || scheme.startsWith("tel")
                     || scheme.startsWith("sms")
                     || scheme.startsWith("mailto")) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -29,10 +31,11 @@ public class WebKitUtils {
                 activity.startActivity(intent);
                 return true;
             }
+            // 只有 http 的才加载
+            return !url.startsWith("http");
         } catch (Exception e) {
             e.printStackTrace();
             return false;
         }
-        return false;
     }
 }

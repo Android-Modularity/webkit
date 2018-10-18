@@ -6,8 +6,10 @@ import android.os.Build;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 
 import com.march.common.exts.EmptyX;
+import com.march.common.exts.WebViewX;
 import com.march.webkit.WebKit;
 import com.march.webkit.webview.IWebViewSetting;
 
@@ -95,5 +97,11 @@ public class SysWebViewSetting implements IWebViewSetting {
         }
         cookieManager.setCookie(url,  sbCookie.toString());
         CookieSyncManager.getInstance().sync();//同步cookie
+    }
+
+    @Override
+    public void destroyWebView(Object obj) {
+        WebView webView = (WebView) obj;
+        WebViewX.destroyWebView(webView);
     }
 }

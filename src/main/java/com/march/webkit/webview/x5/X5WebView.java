@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 
 import com.march.common.exts.EmptyX;
 import com.march.common.exts.LogX;
+import com.march.common.exts.WebViewX;
 import com.march.webkit.R;
 import com.march.webkit.adapter.WebViewAdapter;
 import com.march.webkit.webview.IWebViewSetting;
@@ -137,5 +138,11 @@ public class X5WebView extends WebView implements IWebView {
     @Override
     public void setWebViewAdapter(WebViewAdapter webViewAdapter) {
         mWebViewAdapter = webViewAdapter;
+    }
+
+    @Override
+    public void onDestroy() {
+        mWebViewAdapter = WebViewAdapter.EMPTY;
+        mWebViewSetting.destroyWebView(this);
     }
 }

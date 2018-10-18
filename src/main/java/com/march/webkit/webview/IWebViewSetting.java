@@ -14,4 +14,6 @@ public interface IWebViewSetting {
 
     void syncCookie(Context context, String url);
 
+    void destroyWebView(Object webview);
+
 }

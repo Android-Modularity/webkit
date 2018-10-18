@@ -78,4 +78,5 @@ public class X5WebViewClient extends WebViewClient {
         LogX.all("onReceivedSslError");
         sslErrorHandler.proceed();
     }
+
 }

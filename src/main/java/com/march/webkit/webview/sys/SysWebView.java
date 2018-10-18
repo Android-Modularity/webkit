@@ -18,11 +18,13 @@ import android.widget.ProgressBar;
 import com.march.common.exts.EmptyX;
 import com.march.common.exts.LogX;
 import com.march.common.exts.ResourceX;
+import com.march.common.exts.WebViewX;
 import com.march.webkit.R;
 import com.march.webkit.adapter.WebViewAdapter;
-import com.march.webkit.webview.IWebViewSetting;
 import com.march.webkit.js.JsBridge;
 import com.march.webkit.webview.IWebView;
+import com.march.webkit.webview.IWebViewSetting;
+import com.march.webkit.webview.WebKitUtils;
 
 
 /**
@@ -180,5 +182,11 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     @Override
     public void setWebViewAdapter(WebViewAdapter webViewAdapter) {
         mWebViewAdapter = webViewAdapter;
+    }
+
+    @Override
+    public void onDestroy() {
+        mWebViewAdapter = WebViewAdapter.EMPTY;
+        WebViewX.destroyWebView(this);
     }
 }

@@ -3,8 +3,10 @@ package com.march.webkit.webview.x5;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebView;
 
 import com.march.common.exts.EmptyX;
 import com.march.webkit.WebKit;
@@ -77,5 +79,30 @@ public class X5WebViewSetting implements IWebViewSetting {
             cookieManager.setCookie(url, cookieValue);
         }
         CookieSyncManager.getInstance().sync();//同步cookie
+    }
+
+    @Override
+    public void destroyWebView(Object obj) {
+        com.tencent.smtt.sdk.WebView webView = (com.tencent.smtt.sdk.WebView) obj;
+        if (webView == null) {
+            return;
+        }
+        try {
+            try {
+                ((ViewGroup) webView.getParent()).removeView(webView);
+            } catch (Exception ignore) {
+
+            }
+            webView.stopLoading();
+            webView.getSettings().setJavaScriptEnabled(false);
+            webView.clearHistory();
+            webView.clearAnimation();
+            webView.loadUrl("about:blank");
+            webView.clearView();
+            webView.removeAllViews();
+            webView.destroy();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
