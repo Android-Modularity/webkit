@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.march.common.funcs.Consumer;
 import com.march.webkit.webview.IWebView;
 
 
@@ -20,15 +21,15 @@ import com.march.webkit.webview.IWebView;
  */
 public class WebFragment extends Fragment {
 
-    private IWebView mIWebView;
-    private String   mUrl;
+    private IWebView           mIWebView;
+    private String             mUrl;
+    private Consumer<IWebView> mWebViewInitConsumer;
 
     public static WebFragment newInst(Bundle args) {
         WebFragment webFragment = new WebFragment();
         webFragment.setArguments(args);
         return webFragment;
     }
-
 
     public WebFragment() {
 
@@ -38,6 +39,10 @@ public class WebFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mIWebView = WebKit.createWebView(getActivity());
+        if (mWebViewInitConsumer != null) {
+            mWebViewInitConsumer.accept(mIWebView);
+        }
+        mIWebView.attachActivity(getActivity());
     }
 
     @Override
@@ -68,5 +73,9 @@ public class WebFragment extends Fragment {
 
     public IWebView getIWebView() {
         return mIWebView;
+    }
+
+    public void setWebViewInitConsumer(Consumer<IWebView> webViewInitConsumer) {
+        mWebViewInitConsumer = webViewInitConsumer;
     }
 }

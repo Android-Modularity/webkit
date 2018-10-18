@@ -1,8 +1,6 @@
 package com.march.webkit.webview.sys;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.net.http.SslError;
 import android.view.View;
 import android.webkit.SslErrorHandler;
@@ -11,8 +9,8 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
-import com.march.common.exts.EmptyX;
 import com.march.common.exts.LogX;
+import com.march.webkit.webview.WebKitUtils;
 
 
 /**
@@ -33,35 +31,18 @@ public class SysWebViewClient extends android.webkit.WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if (!handleBySystemIntent(url)) {
+        if (!WebKitUtils.handleBySystemIntent(mActivity, url) && !mMyWebView.mWebViewAdapter.shouldOverrideUrlLoading(url)) {
             view.loadUrl(url);
         }
         return true;
     }
 
-    private boolean handleBySystemIntent(String link) {
-        try {
-            Uri uri = Uri.parse(    link);
-            String scheme = uri.getScheme();
-            if (EmptyX.isEmpty(scheme))
-                return false;
-            if (!scheme.startsWith("http")) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(uri);
-                mActivity.startActivity(intent);
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return false;
-    }
 
     @Override
     public void onPageFinished(WebView view, String url) {
         super.onPageFinished(view, url);
         mMyWebView.getProgressBar().setVisibility(View.GONE);
+        mMyWebView.mWebViewAdapter.onPageFinished(url);
     }
 
     @Override

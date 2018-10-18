@@ -9,7 +9,7 @@ import android.webkit.WebSettings;
 
 import com.march.common.exts.EmptyX;
 import com.march.webkit.WebKit;
-import com.march.webkit.common.IWebViewSetting;
+import com.march.webkit.webview.IWebViewSetting;
 
 import java.net.HttpCookie;
 import java.util.List;

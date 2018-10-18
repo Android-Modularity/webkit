@@ -1,12 +1,10 @@
 package com.march.webkit.webview.x5;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.View;
 
-import com.march.common.exts.EmptyX;
 import com.march.common.exts.LogX;
+import com.march.webkit.webview.WebKitUtils;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
@@ -34,33 +32,12 @@ public class X5WebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if (!handleBySystemIntent(url)) {
+        if (!WebKitUtils.handleBySystemIntent(mActivity, url) && !mMyWebView.mWebViewAdapter.shouldOverrideUrlLoading(url)) {
             view.loadUrl(url);
         }
         return true;
     }
 
-    private boolean handleBySystemIntent(String link) {
-        try {
-            String url = link.replace("//", "");
-            Uri uri = Uri.parse(url);
-            String scheme = uri.getScheme();
-            if (EmptyX.isEmpty(scheme))
-                return false;
-            if (scheme.startsWith("tel")
-                    || scheme.startsWith("sms")
-                    || scheme.startsWith("mailto")) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(uri);
-                mActivity.startActivity(intent);
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return false;
-    }
 
     @Override
     public WebResourceResponse shouldInterceptRequest(WebView webView, String url) {
@@ -70,9 +47,10 @@ public class X5WebViewClient extends WebViewClient {
 
 
     @Override
-    public void onPageFinished(com.tencent.smtt.sdk.WebView webView, String s) {
-        super.onPageFinished(webView, s);
+    public void onPageFinished(com.tencent.smtt.sdk.WebView webView, String url) {
+        super.onPageFinished(webView, url);
         mMyWebView.getProgressBar().setVisibility(View.GONE);
+        mMyWebView.mWebViewAdapter.onPageFinished(url);
     }
 
     @Override

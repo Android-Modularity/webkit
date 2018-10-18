@@ -23,13 +23,13 @@ public class WebKit {
     public static final int CORE_X5 = 1;
 
     private static int         sCoreType;
-    private static MetaAdapter sMetaAdapter;
+    private static MetaAdapter sMetaAdapter = MetaAdapter.EMPTY;
 
     public static void init(Application app, int type, MetaAdapter adapter) {
-
         sCoreType = type;
-        sMetaAdapter = adapter == null ? MetaAdapter.EMPTY : adapter;
-
+        if (adapter != null) {
+            sMetaAdapter = adapter;
+        }
         if (sCoreType == CORE_X5) {
             QbSdk.initX5Environment(app, new QbSdk.PreInitCallback() {
                 @Override

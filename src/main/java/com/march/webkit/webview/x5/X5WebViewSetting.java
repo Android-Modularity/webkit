@@ -8,7 +8,7 @@ import android.webkit.CookieSyncManager;
 
 import com.march.common.exts.EmptyX;
 import com.march.webkit.WebKit;
-import com.march.webkit.common.IWebViewSetting;
+import com.march.webkit.webview.IWebViewSetting;
 import com.tencent.smtt.sdk.WebSettings;
 
 import java.net.HttpCookie;

@@ -2,6 +2,7 @@ package com.march.webkit.webview.sys;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -12,16 +13,16 @@ import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
-import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.march.common.exts.EmptyX;
 import com.march.common.exts.LogX;
 import com.march.common.exts.ResourceX;
-import com.march.webkit.webview.IWebView;
 import com.march.webkit.R;
-import com.march.webkit.common.IWebViewSetting;
+import com.march.webkit.adapter.WebViewAdapter;
+import com.march.webkit.webview.IWebViewSetting;
 import com.march.webkit.js.JsBridge;
+import com.march.webkit.webview.IWebView;
 
 
 /**
@@ -35,24 +36,29 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
 
     public static final int WEB_REQ_CODE = 0x123;
 
-    public SysWebView(Activity activity) {
+    private Activity    mActivity;
+    private ProgressBar mProgressBar;
+    ValueCallback<Uri[]> mFilePathCallback;
+    IWebViewSetting      mWebViewSetting;
+    WebViewAdapter mWebViewAdapter = WebViewAdapter.EMPTY;
+
+    public SysWebView(Context activity) {
         this(activity, null);
     }
 
-    public SysWebView(Activity activity, AttributeSet attrs) {
+    public SysWebView(Context activity, AttributeSet attrs) {
         this(activity, attrs, 0);
     }
 
-    public SysWebView(Activity activity, AttributeSet attrs, int defStyleAttr) {
+    public SysWebView(Context activity, AttributeSet attrs, int defStyleAttr) {
         super(activity, attrs, defStyleAttr);
+    }
+
+    @Override
+    public void attachActivity(Activity activity) {
         initProgressBar();
         initWebView(activity);
     }
-
-    private Activity mActivity;
-    private ProgressBar mProgressBar;
-    ValueCallback<Uri[]> mFilePathCallback;
-    IWebViewSetting mWebViewSetting;
 
     private void initProgressBar() {
         if (isInEditMode())
@@ -65,7 +71,6 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         addView(mProgressBar);
     }
 
-
     private void initWebView(Activity activity) {
         
         mActivity = activity;
@@ -73,8 +78,8 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         mWebViewSetting = new SysWebViewSetting();
         mWebViewSetting.setting(this);
         initDownloadListener();
-        setWebViewClientAdapter(new SysWebViewClient(activity, this));
-        setWebChromeClientAdapter(new SysWebChromeClient(activity, this));
+        setWebViewClient(new SysWebViewClient(activity, this));
+        setWebChromeClient(new SysWebChromeClient(activity, this));
         addJsBridge(new JsBridge(), null);
     }
 
@@ -128,6 +133,11 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     }
 
     @Override
+    public void refresh() {
+        loadUrl(getUrl());
+    }
+
+    @Override
     public boolean onBackPressed() {
         if (canGoBack()) {
             goBack();
@@ -161,28 +171,14 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         addJavascriptInterface(jsBridge, name);
     }
 
-    @Override
-    public void setWebViewClientAdapter(Object webViewClient) {
-        if (webViewClient instanceof WebViewClient) {
-            setWebViewClient((WebViewClient) webViewClient);
-        } else {
-            LogX.e("setWebViewClientAdapter param error, use <WebViewClient>");
-        }
-    }
-
-    @Override
-    public void setWebChromeClientAdapter(Object webChromeClient) {
-        if (webChromeClient instanceof WebChromeClient) {
-            setWebChromeClient((WebChromeClient) webChromeClient);
-        } else {
-            LogX.e("setWebChromeClientAdapter param error, use <WebChromeClient>");
-        }
-    }
-
 
     @Override
     public ProgressBar getProgressBar() {
         return mProgressBar;
     }
 
+    @Override
+    public void setWebViewAdapter(WebViewAdapter webViewAdapter) {
+        mWebViewAdapter = webViewAdapter;
+    }
 }

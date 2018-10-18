@@ -1,4 +1,4 @@
-package com.march.webkit.common;
+package com.march.webkit.webview;
 
 import android.content.Context;
 
