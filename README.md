@@ -14,7 +14,7 @@ HViewX.initSmartRefresh(mRefreshSrl, null, v -> {
 
 // 初始化 Fragment
 mWebFragment = WebFragment.newInst(getIntent().getExtras());
-
+1
 // 设置 WebViewAdapter
 mWebFragment.setWebViewInitConsumer(webview -> {
     webview.setWebViewAdapter(new WebViewAdapter() {
