@@ -23,7 +23,7 @@ import com.tencent.smtt.sdk.WebViewClient;
 public class X5WebViewClient extends WebViewClient {
 
     private X5WebView mMyWebView;
-    private Activity mActivity;
+    private Activity  mActivity;
 
     public X5WebViewClient(Activity activity, X5WebView myWebView) {
         mMyWebView = myWebView;

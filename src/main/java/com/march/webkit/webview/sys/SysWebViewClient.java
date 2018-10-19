@@ -22,7 +22,7 @@ import com.march.webkit.webview.WebKitUtils;
 public class SysWebViewClient extends android.webkit.WebViewClient {
 
     private SysWebView mMyWebView;
-    private Activity mActivity;
+    private Activity   mActivity;
 
     public SysWebViewClient(Activity activity, SysWebView myWebView) {
         mMyWebView = myWebView;

@@ -26,14 +26,14 @@ public class WebFragment extends Fragment {
     private String             mUrl;
     private Consumer<IWebView> mWebViewInitConsumer;
 
+    public WebFragment() {
+
+    }
+
     public static WebFragment newInst(Bundle args) {
         WebFragment webFragment = new WebFragment();
         webFragment.setArguments(args);
         return webFragment;
-    }
-
-    public WebFragment() {
-
     }
 
     @Override

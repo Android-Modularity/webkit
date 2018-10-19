@@ -15,15 +15,15 @@ import com.march.webkit.js.JsBridge;
  *
  * @author chendong
  */
-public interface IWebView extends Destroyable{
+public interface IWebView extends Destroyable {
 
     String JS_INVOKE_NAME = "native";
 
     int PROGRESS_HEIGHT = 3;
 
     int SOURCE_ASSETS = 1;
-    int SOURCE_NET = 2;
-    int SOURCE_LOCAL = 3;
+    int SOURCE_NET    = 2;
+    int SOURCE_LOCAL  = 3;
 
     Context getContext();
 

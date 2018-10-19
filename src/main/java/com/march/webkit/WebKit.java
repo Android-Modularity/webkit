@@ -20,9 +20,9 @@ public class WebKit {
     public static final String KEY_URL = "WEBKIT_KEY_URL";
 
     public static final int CORE_SYS = 0;
-    public static final int CORE_X5 = 1;
+    public static final int CORE_X5  = 1;
 
-    private static int         sCoreType;
+    private static int sCoreType;
     private static MetaAdapter sMetaAdapter = MetaAdapter.EMPTY;
 
     public static void init(Application app, int type, MetaAdapter adapter) {

@@ -14,7 +14,7 @@ import com.tencent.smtt.sdk.WebChromeClient;
 public class X5WebChromeClient extends WebChromeClient {
 
     private X5WebView mMyWebView;
-    private Activity mActivity;
+    private Activity  mActivity;
 
     public X5WebChromeClient(Activity activity, X5WebView myWebView) {
         mMyWebView = myWebView;

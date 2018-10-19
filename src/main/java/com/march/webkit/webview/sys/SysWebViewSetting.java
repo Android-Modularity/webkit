@@ -95,7 +95,7 @@ public class SysWebViewSetting implements IWebViewSetting {
             sbCookie.append(";domain=").append(cookie.getDomain());
             sbCookie.append(";path=").append(cookie.getPath());
         }
-        cookieManager.setCookie(url,  sbCookie.toString());
+        cookieManager.setCookie(url, sbCookie.toString());
         CookieSyncManager.getInstance().sync();//同步cookie
     }
 

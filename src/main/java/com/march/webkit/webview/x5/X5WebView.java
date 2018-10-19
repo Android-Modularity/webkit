@@ -14,20 +14,19 @@ import android.widget.ProgressBar;
 
 import com.march.common.exts.EmptyX;
 import com.march.common.exts.LogX;
-import com.march.common.exts.WebViewX;
 import com.march.webkit.R;
 import com.march.webkit.adapter.WebViewAdapter;
-import com.march.webkit.webview.IWebViewSetting;
 import com.march.webkit.js.JsBridge;
 import com.march.webkit.webview.IWebView;
+import com.march.webkit.webview.IWebViewSetting;
 import com.tencent.smtt.sdk.WebView;
 
 public class X5WebView extends WebView implements IWebView {
 
-    private ProgressBar mProgressBar;
-    private Activity mActivity;
     IWebViewSetting mWebViewSetting;
     WebViewAdapter mWebViewAdapter = WebViewAdapter.EMPTY;
+    private ProgressBar mProgressBar;
+    private Activity    mActivity;
 
     public X5WebView(Context activity) {
         this(activity, null);
@@ -75,7 +74,7 @@ public class X5WebView extends WebView implements IWebView {
             LogX.e("please invoke initWebView() first");
             return;
         }
-        if(EmptyX.isEmpty(path)){
+        if (EmptyX.isEmpty(path)) {
             return;
         }
         switch (source) {

@@ -14,12 +14,6 @@ import java.util.List;
  */
 public interface MetaAdapter {
 
-    String getUserAgent();
-
-    List<HttpCookie> getCookies(String url);
-
-    List<String> getAllowOpenSchemes();
-
     MetaAdapter EMPTY = new MetaAdapter() {
         @Override
         public String getUserAgent() {
@@ -36,4 +30,10 @@ public interface MetaAdapter {
             return new ArrayList<>();
         }
     };
+
+    String getUserAgent();
+
+    List<HttpCookie> getCookies(String url);
+
+    List<String> getAllowOpenSchemes();
 }

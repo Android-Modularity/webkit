@@ -6,7 +6,6 @@ import android.os.Build;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-import android.webkit.WebView;
 
 import com.march.common.exts.EmptyX;
 import com.march.webkit.WebKit;

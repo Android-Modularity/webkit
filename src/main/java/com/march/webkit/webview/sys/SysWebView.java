@@ -24,7 +24,6 @@ import com.march.webkit.adapter.WebViewAdapter;
 import com.march.webkit.js.JsBridge;
 import com.march.webkit.webview.IWebView;
 import com.march.webkit.webview.IWebViewSetting;
-import com.march.webkit.webview.WebKitUtils;
 
 
 /**
@@ -37,12 +36,11 @@ import com.march.webkit.webview.WebKitUtils;
 public class SysWebView extends android.webkit.WebView implements IWebView {
 
     public static final int WEB_REQ_CODE = 0x123;
-
-    private Activity    mActivity;
-    private ProgressBar mProgressBar;
     ValueCallback<Uri[]> mFilePathCallback;
     IWebViewSetting      mWebViewSetting;
     WebViewAdapter mWebViewAdapter = WebViewAdapter.EMPTY;
+    private Activity    mActivity;
+    private ProgressBar mProgressBar;
 
     public SysWebView(Context activity) {
         this(activity, null);
@@ -74,7 +72,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     }
 
     private void initWebView(Activity activity) {
-        
+
         mActivity = activity;
         setBackgroundColor(Color.WHITE);
         mWebViewSetting = new SysWebViewSetting();
@@ -89,9 +87,9 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent,
-                    String contentDisposition,
-                    String mimeType,
-                    long contentLength) {
+                                        String contentDisposition,
+                                        String mimeType,
+                                        long contentLength) {
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 String downLoadUrl = url;
                 if (!downLoadUrl.contains("http://")) {
@@ -110,7 +108,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
             LogX.e("please invoke initWebView() first");
             return;
         }
-        if(EmptyX.isEmpty(path)){
+        if (EmptyX.isEmpty(path)) {
             return;
         }
         switch (source) {
