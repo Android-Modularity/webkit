@@ -3,6 +3,8 @@ package com.march.webkit.sys;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
@@ -25,6 +27,7 @@ public class SysWebViewSetting implements IWebViewSetting {
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void setting(Object webview) {
+
         if (!(webview instanceof SysWebView)) {
             return;
         }

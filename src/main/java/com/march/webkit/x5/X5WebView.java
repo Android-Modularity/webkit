@@ -12,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
 import com.march.common.utils.CheckUtils;
-import com.march.common.utils.LgUtils;
 import com.march.webkit.IWebView;
 import com.march.webkit.R;
 import com.march.webkit.common.IWebViewSetting;
@@ -67,7 +66,7 @@ public class X5WebView extends WebView implements IWebView {
     @Override
     public void loadPage(String path, int source) {
         if (mActivity == null) {
-            LgUtils.e("please invoke initWebView() first");
+            LogUtils.e("please invoke initWebView() first");
             return;
         }
         if(CheckUtils.isEmpty(path)){

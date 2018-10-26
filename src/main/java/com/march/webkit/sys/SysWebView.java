@@ -6,12 +6,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
@@ -67,6 +70,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
 
 
     private void initWebView(Activity activity) {
+        
         mActivity = activity;
         setBackgroundColor(Color.WHITE);
         mWebViewSetting = new SysWebViewSetting();
@@ -125,7 +129,6 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     public void loadPage(String path) {
         loadPage(path, SOURCE_NET);
     }
-
 
     @Override
     public boolean onBackPressed() {
