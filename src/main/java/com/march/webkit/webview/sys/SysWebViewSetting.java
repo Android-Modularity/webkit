@@ -1,17 +1,17 @@
-package com.march.webkit.sys;
+package com.march.webkit.webview.sys;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 
-import com.march.common.utils.CheckUtils;
+import com.march.common.exts.EmptyX;
+import com.march.common.exts.WebViewX;
 import com.march.webkit.WebKit;
-import com.march.webkit.common.IWebViewSetting;
+import com.march.webkit.webview.IWebViewSetting;
 
 import java.net.HttpCookie;
 import java.util.List;
@@ -69,16 +69,16 @@ public class SysWebViewSetting implements IWebViewSetting {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-        webSettings.setUserAgentString(webSettings.getUserAgentString() + WebKit.getInjector().getUserAgent());
+        webSettings.setUserAgentString(webSettings.getUserAgentString() + WebKit.getMetaAdapter().getUserAgent());
     }
 
     @Override
     public void syncCookie(Context context, String url) {
-        if (CheckUtils.isEmpty(url)) {
+        if (EmptyX.isEmpty(url)) {
             return;
         }
-        List<HttpCookie> cookies = WebKit.getInjector().getCookies(url);
-        if (CheckUtils.isEmpty(cookies)) {
+        List<HttpCookie> cookies = WebKit.getMetaAdapter().getCookies(url);
+        if (EmptyX.isEmpty(cookies)) {
             return;
         }
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
@@ -95,7 +95,13 @@ public class SysWebViewSetting implements IWebViewSetting {
             sbCookie.append(";domain=").append(cookie.getDomain());
             sbCookie.append(";path=").append(cookie.getPath());
         }
-        cookieManager.setCookie(url,  sbCookie.toString());
+        cookieManager.setCookie(url, sbCookie.toString());
         CookieSyncManager.getInstance().sync();//同步cookie
+    }
+
+    @Override
+    public void destroyWebView(Object obj) {
+        WebView webView = (WebView) obj;
+        WebViewX.destroyWebView(webView);
     }
 }

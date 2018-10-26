@@ -1,4 +1,4 @@
-package com.march.webkit.common;
+package com.march.webkit.webview;
 
 import android.content.Context;
 
@@ -13,5 +13,7 @@ public interface IWebViewSetting {
     void setting(Object webview);
 
     void syncCookie(Context context, String url);
+
+    void destroyWebView(Object webview);
 
 }

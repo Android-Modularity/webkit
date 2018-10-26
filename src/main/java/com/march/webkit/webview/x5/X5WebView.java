@@ -1,7 +1,8 @@
-package com.march.webkit.x5;
+package com.march.webkit.webview.x5;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -11,32 +12,36 @@ import android.widget.AbsoluteLayout;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.march.common.utils.CheckUtils;
-import com.march.webkit.IWebView;
+import com.march.common.exts.EmptyX;
+import com.march.common.exts.LogX;
 import com.march.webkit.R;
-import com.march.webkit.common.IWebViewSetting;
+import com.march.webkit.adapter.WebViewAdapter;
 import com.march.webkit.js.JsBridge;
-import com.tencent.smtt.sdk.WebChromeClient;
+import com.march.webkit.webview.IWebView;
+import com.march.webkit.webview.IWebViewSetting;
 import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
 
 public class X5WebView extends WebView implements IWebView {
 
-    private ProgressBar mProgressBar;
-    private Activity mActivity;
     IWebViewSetting mWebViewSetting;
+    WebViewAdapter mWebViewAdapter = WebViewAdapter.EMPTY;
+    private ProgressBar mProgressBar;
+    private Activity    mActivity;
 
-
-    public X5WebView(Activity activity) {
+    public X5WebView(Context activity) {
         this(activity, null);
     }
 
-    public X5WebView(Activity activity, AttributeSet attributeSet) {
+    public X5WebView(Context activity, AttributeSet attributeSet) {
         this(activity, attributeSet, 0);
     }
 
-    public X5WebView(Activity activity, AttributeSet attributeSet, int i) {
+    public X5WebView(Context activity, AttributeSet attributeSet, int i) {
         super(activity, attributeSet, i);
+    }
+
+    @Override
+    public void attachActivity(Activity activity) {
         initProgressBar();
         initWebView(activity);
     }
@@ -58,18 +63,18 @@ public class X5WebView extends WebView implements IWebView {
         mWebViewSetting = new X5WebViewSetting();
         mWebViewSetting.setting(this);
         setBackgroundColor(Color.WHITE);
-        setWebViewClientAdapter(new X5WebViewClient(activity, this));
-        setWebChromeClientAdapter(new X5WebChromeClient(activity, this));
+        setWebViewClient(new X5WebViewClient(activity, this));
+        setWebChromeClient(new X5WebChromeClient(activity, this));
         addJsBridge(new JsBridge(), null);
     }
 
     @Override
     public void loadPage(String path, int source) {
         if (mActivity == null) {
-            LogUtils.e("please invoke initWebView() first");
+            LogX.e("please invoke initWebView() first");
             return;
         }
-        if(CheckUtils.isEmpty(path)){
+        if (EmptyX.isEmpty(path)) {
             return;
         }
         switch (source) {
@@ -119,26 +124,24 @@ public class X5WebView extends WebView implements IWebView {
     }
 
     @Override
-    public void setWebViewClientAdapter(Object webViewClient) {
-        if (webViewClient instanceof WebViewClient) {
-            setWebViewClient((WebViewClient) webViewClient);
-        } else {
-            LgUtils.e("setWebViewClientAdapter param error, use <WebViewClient>");
-        }
-    }
-
-    @Override
-    public void setWebChromeClientAdapter(Object webChromeClient) {
-        if (webChromeClient instanceof WebChromeClient) {
-            setWebChromeClient((WebChromeClient) webChromeClient);
-        } else {
-            LgUtils.e("setWebChromeClientAdapter param error, use <WebChromeClient>");
-        }
-    }
-
-    @Override
     public ProgressBar getProgressBar() {
         return mProgressBar;
     }
 
+    @Override
+    public void refresh() {
+        loadUrl(getUrl());
+    }
+
+
+    @Override
+    public void setWebViewAdapter(WebViewAdapter webViewAdapter) {
+        mWebViewAdapter = webViewAdapter;
+    }
+
+    @Override
+    public void onDestroy() {
+        mWebViewAdapter = WebViewAdapter.EMPTY;
+        mWebViewSetting.destroyWebView(this);
+    }
 }

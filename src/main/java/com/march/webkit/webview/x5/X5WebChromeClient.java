@@ -1,9 +1,9 @@
-package com.march.webkit.x5;
+package com.march.webkit.webview.x5;
 
 import android.app.Activity;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebView;
+
+import com.tencent.smtt.sdk.WebChromeClient;
 
 /**
  * CreateAt : 2017/11/6
@@ -14,7 +14,7 @@ import android.webkit.WebView;
 public class X5WebChromeClient extends WebChromeClient {
 
     private X5WebView mMyWebView;
-    private Activity mActivity;
+    private Activity  mActivity;
 
     public X5WebChromeClient(Activity activity, X5WebView myWebView) {
         mMyWebView = myWebView;
@@ -22,8 +22,9 @@ public class X5WebChromeClient extends WebChromeClient {
     }
 
     @Override
-    public void onReceivedTitle(WebView view, String title) {
-        super.onReceivedTitle(view, title);
+    public void onReceivedTitle(com.tencent.smtt.sdk.WebView webView, String title) {
+        super.onReceivedTitle(webView, title);
+        mMyWebView.mWebViewAdapter.onReceiveTitle(title);
     }
 
     //
@@ -133,9 +134,10 @@ public class X5WebChromeClient extends WebChromeClient {
 //        return true;
 //    }
 //
+
     @Override
-    public void onProgressChanged(WebView view, int newProgress) {
-        super.onProgressChanged(view, newProgress);
+    public void onProgressChanged(com.tencent.smtt.sdk.WebView webView, int newProgress) {
+        super.onProgressChanged(webView, newProgress);
         if (newProgress == 100) {
             mMyWebView.getProgressBar().setVisibility(View.GONE);
         } else {
@@ -145,6 +147,8 @@ public class X5WebChromeClient extends WebChromeClient {
             mMyWebView.getProgressBar().setProgress(newProgress);
         }
     }
+
+
 //
 //
 //    // settings.setSupportMultipleWindows(false);

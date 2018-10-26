@@ -1,6 +1,7 @@
-def libs = rootProject.ext.libs
+apply from: '../scripts/library.gradle'
+
 dependencies {
-    api fileTree(dir: 'libs', include: ['*.jar'])
-    implementation libs.appcompat_v7
-    implementation project(':common')
+    implementation files("libs/tbs_sdk_v3.6.0.1183.jar")
+    compileOnly libs.appcompat_v7
+    compileOnly project(path: ':common')
 }

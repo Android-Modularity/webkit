@@ -1,4 +1,4 @@
-package com.march.webkit.sys;
+package com.march.webkit.webview.sys;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
 public class SysWebChromeClient extends WebChromeClient {
 
     private SysWebView mMyWebView;
-    private Activity mActivity;
+    private Activity   mActivity;
 
     public SysWebChromeClient(Activity activity, SysWebView myWebView) {
         mMyWebView = myWebView;
@@ -35,13 +35,14 @@ public class SysWebChromeClient extends WebChromeClient {
     @Override
     public void onReceivedTitle(WebView view, String title) {
         super.onReceivedTitle(view, title);
+        mMyWebView.mWebViewAdapter.onReceiveTitle(title);
     }
 
 
     @Override
     public boolean onShowFileChooser(WebView webView,
-            ValueCallback<Uri[]> filePathCallback,
-            FileChooserParams fileChooserParams) {
+                                     ValueCallback<Uri[]> filePathCallback,
+                                     FileChooserParams fileChooserParams) {
         if (mActivity == null)
             return false;
         /*
