@@ -1,3 +1,3 @@
 <resources>
-    <string name="app_name">webkit</string>
+    <string name="app_name" translatable="false">webkit</string>
 </resources>

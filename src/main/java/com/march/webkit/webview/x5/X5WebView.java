@@ -28,16 +28,16 @@ public class X5WebView extends WebView implements IWebView {
     private ProgressBar mProgressBar;
     private Activity    mActivity;
 
-    public X5WebView(Context activity) {
-        this(activity, null);
+    public X5WebView(Context context) {
+        this(context, null);
     }
 
-    public X5WebView(Context activity, AttributeSet attributeSet) {
-        this(activity, attributeSet, 0);
+    public X5WebView(Context context, AttributeSet attributeSet) {
+        this(context, attributeSet, 0);
     }
 
-    public X5WebView(Context activity, AttributeSet attributeSet, int i) {
-        super(activity, attributeSet, i);
+    public X5WebView(Context context, AttributeSet attributeSet, int i) {
+        super(context, attributeSet, i);
     }
 
     @Override

@@ -42,16 +42,16 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     private Activity    mActivity;
     private ProgressBar mProgressBar;
 
-    public SysWebView(Context activity) {
-        this(activity, null);
+    public SysWebView(Context context) {
+        this(context, null);
     }
 
-    public SysWebView(Context activity, AttributeSet attrs) {
-        this(activity, attrs, 0);
+    public SysWebView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    public SysWebView(Context activity, AttributeSet attrs, int defStyleAttr) {
-        super(activity, attrs, defStyleAttr);
+    public SysWebView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
     }
 
     @Override
@@ -72,7 +72,6 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     }
 
     private void initWebView(Activity activity) {
-
         mActivity = activity;
         setBackgroundColor(Color.WHITE);
         mWebViewSetting = new SysWebViewSetting();
