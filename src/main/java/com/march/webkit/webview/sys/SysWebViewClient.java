@@ -9,7 +9,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
-import com.march.common.exts.LogX;
+import com.march.common.x.LogX;
 import com.march.webkit.webview.WebKitUtils;
 
 

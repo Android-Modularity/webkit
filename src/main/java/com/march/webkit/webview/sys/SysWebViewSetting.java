@@ -8,8 +8,8 @@ import android.webkit.CookieSyncManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 
-import com.march.common.exts.EmptyX;
-import com.march.common.exts.WebViewX;
+import com.march.common.x.EmptyX;
+import com.march.common.x.WebViewX;
 import com.march.webkit.WebKit;
 import com.march.webkit.webview.IWebViewSetting;
 

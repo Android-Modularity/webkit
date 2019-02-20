@@ -1,7 +1,7 @@
-apply from: '../scripts/library.gradle'
+apply from: '../scripts/module.gradle'
 
 dependencies {
     implementation files("libs/tbs_sdk_v3.6.0.1183.jar")
-    compileOnly libs.appcompat_v7
-    compileOnly project(path: ':common')
+    compileOnly deps.appcompat_v7
+    compileOnly deps.common
 }

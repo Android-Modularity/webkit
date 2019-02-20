@@ -12,8 +12,8 @@ import android.widget.AbsoluteLayout;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.march.common.exts.EmptyX;
-import com.march.common.exts.LogX;
+import com.march.common.x.EmptyX;
+import com.march.common.x.LogX;
 import com.march.webkit.R;
 import com.march.webkit.adapter.WebViewAdapter;
 import com.march.webkit.js.JsBridge;

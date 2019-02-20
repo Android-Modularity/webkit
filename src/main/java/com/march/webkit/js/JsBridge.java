@@ -3,8 +3,8 @@ package com.march.webkit.js;
 import android.app.Activity;
 import android.webkit.JavascriptInterface;
 
-import com.march.common.exts.LogX;
-import com.march.common.exts.ToastX;
+import com.march.common.x.LogX;
+import com.march.common.x.ToastX;
 import com.march.webkit.webview.IWebView;
 
 

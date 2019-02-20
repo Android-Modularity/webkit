@@ -15,10 +15,10 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.widget.ProgressBar;
 
-import com.march.common.exts.EmptyX;
-import com.march.common.exts.LogX;
-import com.march.common.exts.ResourceX;
-import com.march.common.exts.WebViewX;
+import com.march.common.x.EmptyX;
+import com.march.common.x.LogX;
+import com.march.common.x.ResourceX;
+import com.march.common.x.WebViewX;
 import com.march.webkit.R;
 import com.march.webkit.adapter.WebViewAdapter;
 import com.march.webkit.js.JsBridge;

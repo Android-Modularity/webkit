@@ -3,7 +3,7 @@ package com.march.webkit.webview.x5;
 import android.app.Activity;
 import android.view.View;
 
-import com.march.common.exts.LogX;
+import com.march.common.x.LogX;
 import com.march.webkit.webview.WebKitUtils;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
@@ -74,9 +74,8 @@ public class X5WebViewClient extends WebViewClient {
 
     @Override
     public void onReceivedSslError(WebView webView, SslErrorHandler sslErrorHandler, SslError sslError) {
-        super.onReceivedSslError(webView, sslErrorHandler, sslError);
+        // super.onReceivedSslError(webView, sslErrorHandler, sslError);
         LogX.all("onReceivedSslError");
         sslErrorHandler.proceed();
     }
-
 }

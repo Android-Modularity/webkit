@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-import com.march.common.exts.EmptyX;
+import com.march.common.x.EmptyX;
 import com.march.webkit.WebKit;
 import com.march.webkit.webview.IWebViewSetting;
 import com.tencent.smtt.sdk.WebSettings;

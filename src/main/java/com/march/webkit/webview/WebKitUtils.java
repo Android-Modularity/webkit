@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 
-import com.march.common.exts.EmptyX;
+import com.march.common.x.EmptyX;
 import com.march.webkit.WebKit;
 
 /**
@@ -32,7 +32,7 @@ public class WebKitUtils {
                 return true;
             }
             // 只有 http 的才加载
-            return !url.startsWith("http");
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
             return false;

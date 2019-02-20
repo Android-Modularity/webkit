@@ -1,6 +1,6 @@
 package com.march.webkit.adapter;
 
-import com.march.common.exts.ListX;
+import com.march.common.x.ListX;
 
 import java.net.HttpCookie;
 import java.util.ArrayList;

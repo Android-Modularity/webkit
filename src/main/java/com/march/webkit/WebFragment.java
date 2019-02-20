@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.march.common.exts.LogX;
+import com.march.common.x.LogX;
 import com.march.common.funcs.Consumer;
 import com.march.webkit.webview.IWebView;
 
