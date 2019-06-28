@@ -1,4 +1,4 @@
-package com.march.webkit.webview.sys;
+package com.zfy.webkit.webview.sys;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,15 +15,15 @@ import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.widget.ProgressBar;
 
-import com.march.common.x.EmptyX;
-import com.march.common.x.LogX;
 import com.march.common.x.ResourceX;
 import com.march.common.x.WebViewX;
-import com.march.webkit.R;
-import com.march.webkit.adapter.WebViewAdapter;
-import com.march.webkit.js.JsBridge;
-import com.march.webkit.webview.IWebView;
-import com.march.webkit.webview.IWebViewSetting;
+import com.zfy.webkit.R;
+import com.zfy.webkit.adapter.WebViewAdapter;
+import com.zfy.webkit.js.JsBridge;
+import com.zfy.webkit.js.ValueCallbackAdapt;
+import com.zfy.webkit.webview.IWebView;
+import com.zfy.webkit.webview.IWebViewSetting;
+import com.zfy.webkit.webview.LoadModel;
 
 
 /**
@@ -36,11 +36,15 @@ import com.march.webkit.webview.IWebViewSetting;
 public class SysWebView extends android.webkit.WebView implements IWebView {
 
     public static final int WEB_REQ_CODE = 0x123;
+
     ValueCallback<Uri[]> mFilePathCallback;
     IWebViewSetting      mWebViewSetting;
-    WebViewAdapter mWebViewAdapter = WebViewAdapter.EMPTY;
+    WebViewAdapter       mWebViewAdapter = WebViewAdapter.EMPTY;
+
     private Activity    mActivity;
     private ProgressBar mProgressBar;
+    private LoadModel   mLoadModel;
+
 
     public SysWebView(Context context) {
         this(context, null);
@@ -61,8 +65,9 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     }
 
     private void initProgressBar() {
-        if (isInEditMode())
+        if (isInEditMode()) {
             return;
+        }
         mProgressBar = new ProgressBar(getContext(), null, android.R.attr.progressBarStyleHorizontal);
         mProgressBar.setLayoutParams(new ViewGroup.LayoutParams(LayoutParams.MATCH_PARENT, PROGRESS_HEIGHT));
         mProgressBar.setProgressDrawable(ResourceX.getDrawable(getContext(), R.drawable.webview_progress_drawable));
@@ -70,6 +75,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         mProgressBar.setProgress(0);
         addView(mProgressBar);
     }
+
 
     private void initWebView(Activity activity) {
         mActivity = activity;
@@ -79,7 +85,7 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         initDownloadListener();
         setWebViewClient(new SysWebViewClient(activity, this));
         setWebChromeClient(new SysWebChromeClient(activity, this));
-        addJsBridge(new JsBridge(), null);
+        addJsBridge(new JsBridge(), JS_INVOKE_NAME);
     }
 
     private void initDownloadListener() {
@@ -101,39 +107,52 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
         });
     }
 
+
     @Override
-    public void loadPage(String path, int source) {
-        if (mActivity == null) {
-            LogX.e("please invoke initWebView() first");
-            return;
-        }
-        if (EmptyX.isEmpty(path)) {
-            return;
-        }
-        switch (source) {
-            case SOURCE_LOCAL:
-                loadUrl("file://" + path);
-                break;
-            case SOURCE_NET:
-                loadUrl(path);
-                break;
-            case SOURCE_ASSETS:
-                loadUrl("file:///android_asset/" + path);
-                break;
-            default:
-                loadUrl(path);
-                break;
+    public void evaluateJavascript(String jsFunc, ValueCallbackAdapt<String> callback) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            evaluateJavascript(jsFunc, new ValueCallbackAdapt<String>() {
+                @Override
+                public void onReceiveValue(String data) {
+                    if (callback != null) {
+                        callback.onReceiveValue(data);
+                    }
+                }
+            });
+        } else {
+            loadUrl(jsFunc);
         }
     }
 
+
     @Override
-    public void loadPage(String path) {
-        loadPage(path, SOURCE_NET);
+    public void load(LoadModel model) {
+        mLoadModel = model;
+        switch (model.getLoadType()) {
+            case LoadModel.ASSETS:
+                loadUrl("file:///android_asset/" + model.getPath(), model.getHeaders());
+                break;
+            case LoadModel.FILE:
+                loadUrl("file://" + model.getPath(), model.getHeaders());
+                break;
+            case LoadModel.DATA:
+                if (model.getBaseUrl() == null || model.getBaseUrl().length() == 0) {
+                    loadData(model.getData(), "text/html", "utf-8");
+                } else {
+                    loadDataWithBaseURL(model.getBaseUrl(), model.getData(), "text/html", "utf-8", null);
+                }
+                break;
+            default:
+                loadUrl(model.getPath(), model.getHeaders());
+                break;
+        }
     }
 
     @Override
     public void refresh() {
-        loadUrl(getUrl());
+        if (mLoadModel != null) {
+            load(mLoadModel);
+        }
     }
 
     @Override
@@ -185,5 +204,15 @@ public class SysWebView extends android.webkit.WebView implements IWebView {
     public void onDestroy() {
         mWebViewAdapter = WebViewAdapter.EMPTY;
         WebViewX.destroyWebView(this);
+    }
+
+    @Override
+    public void postTask(Runnable runnable) {
+        post(runnable);
+    }
+
+    @Override
+    public String getCurUrl() {
+        return this.getUrl();
     }
 }

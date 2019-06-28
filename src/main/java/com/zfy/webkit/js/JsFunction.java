@@ -1,8 +1,6 @@
-package com.march.webkit.js;
+package com.zfy.webkit.js;
 
-import android.os.Build;
-import android.webkit.ValueCallback;
-import android.webkit.WebView;
+import com.zfy.webkit.webview.IWebView;
 
 /**
  * CreateAt : 2017.09.23
@@ -20,22 +18,19 @@ public class JsFunction {
         mJsFuncSign = generateJsFunc(funcName, params);
     }
 
-    public void invoke(WebView webView) {
+    public void invoke(IWebView webView) {
         invoke(webView, null);
     }
 
-    public void invoke(WebView webView, ValueCallback<String> callback) {
+    public void invoke(IWebView webView, ValueCallbackAdapt<String> callback) {
         if (webView == null)
             return;
         if (!mJsFuncSign.startsWith(JS_FUNC_PREFIX)) {
             mJsFuncSign = JS_FUNC_PREFIX + mJsFuncSign;
         }
-        // api 19
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && callback != null) {
+        webView.postTask(() -> {
             webView.evaluateJavascript(mJsFuncSign, callback);
-        } else {
-            webView.loadUrl(mJsFuncSign);
-        }
+        });
     }
 
     // 创建一个 js 方法

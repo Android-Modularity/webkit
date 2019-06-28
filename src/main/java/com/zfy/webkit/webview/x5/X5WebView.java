@@ -1,4 +1,4 @@
-package com.march.webkit.webview.x5;
+package com.zfy.webkit.webview.x5;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -12,21 +12,24 @@ import android.widget.AbsoluteLayout;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
-import com.march.common.x.EmptyX;
-import com.march.common.x.LogX;
-import com.march.webkit.R;
-import com.march.webkit.adapter.WebViewAdapter;
-import com.march.webkit.js.JsBridge;
-import com.march.webkit.webview.IWebView;
-import com.march.webkit.webview.IWebViewSetting;
+import com.zfy.webkit.R;
+import com.zfy.webkit.adapter.WebViewAdapter;
+import com.zfy.webkit.js.JsBridge;
+import com.zfy.webkit.js.ValueCallbackAdapt;
+import com.zfy.webkit.webview.IWebView;
+import com.zfy.webkit.webview.IWebViewSetting;
+import com.zfy.webkit.webview.LoadModel;
 import com.tencent.smtt.sdk.WebView;
 
 public class X5WebView extends WebView implements IWebView {
 
     IWebViewSetting mWebViewSetting;
-    WebViewAdapter mWebViewAdapter = WebViewAdapter.EMPTY;
+    WebViewAdapter  mWebViewAdapter = WebViewAdapter.EMPTY;
+
     private ProgressBar mProgressBar;
     private Activity    mActivity;
+    private LoadModel   mLoadModel;
+
 
     public X5WebView(Context context) {
         this(context, null);
@@ -68,34 +71,37 @@ public class X5WebView extends WebView implements IWebView {
         addJsBridge(new JsBridge(), null);
     }
 
+
     @Override
-    public void loadPage(String path, int source) {
-        if (mActivity == null) {
-            LogX.e("please invoke initWebView() first");
-            return;
-        }
-        if (EmptyX.isEmpty(path)) {
-            return;
-        }
-        switch (source) {
-            case SOURCE_LOCAL:
-                loadUrl("file://" + path);
+    public void load(LoadModel model) {
+        mLoadModel = model;
+        switch (model.getLoadType()) {
+            case LoadModel.ASSETS:
+                loadUrl("file:///android_asset/" + model.getPath(), model.getHeaders());
                 break;
-            case SOURCE_NET:
-                loadUrl(path);
+            case LoadModel.FILE:
+                loadUrl("file://" + model.getPath(), model.getHeaders());
                 break;
-            case SOURCE_ASSETS:
-                loadUrl("file:///android_asset/" + path);
+            case LoadModel.DATA:
+                if (model.getBaseUrl() == null || model.getBaseUrl().length() == 0) {
+                    loadData(model.getData(), "text/html", "utf-8");
+                } else {
+                    loadDataWithBaseURL(model.getBaseUrl(), model.getData(), "text/html", "utf-8", null);
+                }
                 break;
             default:
-                loadUrl(path);
+                loadUrl(model.getPath(), model.getHeaders());
                 break;
         }
     }
 
     @Override
-    public void loadPage(String path) {
-        loadPage(path, SOURCE_NET);
+    public void evaluateJavascript(String jsFunc, ValueCallbackAdapt<String> callback) {
+        evaluateJavascript(jsFunc, data -> {
+            if (callback != null) {
+                callback.onReceiveValue(data);
+            }
+        });
     }
 
     @Override
@@ -130,9 +136,10 @@ public class X5WebView extends WebView implements IWebView {
 
     @Override
     public void refresh() {
-        loadUrl(getUrl());
+        if (mLoadModel != null) {
+            load(mLoadModel);
+        }
     }
-
 
     @Override
     public void setWebViewAdapter(WebViewAdapter webViewAdapter) {
@@ -143,5 +150,15 @@ public class X5WebView extends WebView implements IWebView {
     public void onDestroy() {
         mWebViewAdapter = WebViewAdapter.EMPTY;
         mWebViewSetting.destroyWebView(this);
+    }
+
+    @Override
+    public void postTask(Runnable runnable) {
+        post(runnable);
+    }
+
+    @Override
+    public String getCurUrl() {
+        return this.getUrl();
     }
 }

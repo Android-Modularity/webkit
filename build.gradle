@@ -1,7 +1,17 @@
 apply from: '../scripts/module.gradle'
 
 dependencies {
-    implementation files("libs/tbs_sdk_v3.6.0.1183.jar")
+    implementation files("libs/tbs_sdk_thirdapp_v4.3.0.1072.jar")
     compileOnly deps.appcompat_v7
     compileOnly deps.common
+}
+
+apply plugin: 'bintray-release'
+publish {
+    userOrg = 'zfy'
+    groupId = 'com.zfy'
+    artifactId = 'webkit'
+    publishVersion = '1.0.1'
+    desc = 'webkit'
+    website = 'https://github.com/Android-Modularity/webkit'
 }

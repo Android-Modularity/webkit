@@ -1,10 +1,12 @@
-package com.march.webkit.webview.x5;
+package com.zfy.webkit.webview.x5;
 
 import android.app.Activity;
 import android.view.View;
 
 import com.march.common.x.LogX;
-import com.march.webkit.webview.WebKitUtils;
+import com.zfy.webkit.webview.IWebView;
+import com.zfy.webkit.webview.LoadModel;
+import com.zfy.webkit.webview.WebKitUtils;
 import com.tencent.smtt.export.external.interfaces.SslError;
 import com.tencent.smtt.export.external.interfaces.SslErrorHandler;
 import com.tencent.smtt.export.external.interfaces.WebResourceError;
@@ -33,7 +35,9 @@ public class X5WebViewClient extends WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         if (!WebKitUtils.handleBySystemIntent(mActivity, url) && !mMyWebView.mWebViewAdapter.shouldOverrideUrlLoading(url)) {
-            view.loadUrl(url);
+            if (view instanceof IWebView) {
+                ((IWebView) view).load(LoadModel.netOf(url));
+            }
         }
         return true;
     }

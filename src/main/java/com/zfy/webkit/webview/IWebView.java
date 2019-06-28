@@ -1,4 +1,4 @@
-package com.march.webkit.webview;
+package com.zfy.webkit.webview;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.widget.ProgressBar;
 
 import com.march.common.able.Destroyable;
-import com.march.webkit.adapter.WebViewAdapter;
-import com.march.webkit.js.JsBridge;
+import com.zfy.webkit.adapter.WebViewAdapter;
+import com.zfy.webkit.js.JsBridge;
+import com.zfy.webkit.js.ValueCallbackAdapt;
 
 /**
  * CreateAt : 2018/4/5
@@ -21,15 +22,9 @@ public interface IWebView extends Destroyable {
 
     int PROGRESS_HEIGHT = 3;
 
-    int SOURCE_ASSETS = 1;
-    int SOURCE_NET    = 2;
-    int SOURCE_LOCAL  = 3;
-
     Context getContext();
 
-    void loadPage(String path, int source);
-
-    void loadPage(String path);
+    void load(LoadModel model);
 
     void refresh();
 
@@ -43,6 +38,11 @@ public interface IWebView extends Destroyable {
 
     ProgressBar getProgressBar();
 
+    void evaluateJavascript(String jsFunc, ValueCallbackAdapt<String> callback);
 
     void setWebViewAdapter(WebViewAdapter webViewAdapter);
+
+    void postTask(Runnable runnable);
+
+    String getCurUrl();
 }

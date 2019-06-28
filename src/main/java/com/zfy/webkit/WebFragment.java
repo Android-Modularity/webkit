@@ -1,4 +1,4 @@
-package com.march.webkit;
+package com.zfy.webkit;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 
 import com.march.common.x.LogX;
 import com.march.common.funcs.Consumer;
-import com.march.webkit.webview.IWebView;
+import com.zfy.webkit.webview.IWebView;
+import com.zfy.webkit.webview.LoadModel;
 
 
 /**
@@ -40,10 +41,10 @@ public class WebFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mIWebView = WebKit.createWebView(getActivity());
+        mIWebView.attachActivity(getActivity());
         if (mWebViewInitConsumer != null) {
             mWebViewInitConsumer.accept(mIWebView);
         }
-        mIWebView.attachActivity(getActivity());
     }
 
     @Override
@@ -65,7 +66,7 @@ public class WebFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         if (!TextUtils.isEmpty(mUrl)) {
-            mIWebView.loadPage(mUrl);
+            mIWebView.load(LoadModel.netOf(mUrl));
         }
     }
 

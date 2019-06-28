@@ -1,4 +1,4 @@
-package com.march.webkit.webview.sys;
+package com.zfy.webkit.webview.sys;
 
 import android.app.Activity;
 import android.net.http.SslError;
@@ -10,7 +10,9 @@ import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 
 import com.march.common.x.LogX;
-import com.march.webkit.webview.WebKitUtils;
+import com.zfy.webkit.webview.IWebView;
+import com.zfy.webkit.webview.LoadModel;
+import com.zfy.webkit.webview.WebKitUtils;
 
 
 /**
@@ -32,7 +34,9 @@ public class SysWebViewClient extends android.webkit.WebViewClient {
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         if (!WebKitUtils.handleBySystemIntent(mActivity, url) && !mMyWebView.mWebViewAdapter.shouldOverrideUrlLoading(url)) {
-            view.loadUrl(url);
+            if (view instanceof IWebView) {
+                ((IWebView) view).load(LoadModel.netOf(url));
+            }
         }
         return true;
     }
